@@ -21,53 +21,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <link rel="stylesheet" type="text/css" href="reveal.js/css/theme/devoxx.css" />
 <script src="reveal.js/css/theme/asciinema-player.js"></script></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title" data-transition="zoom" data-transition-speed="fast" data-background-image="./images/osa-title.jpg"><h1></h1><h2>Evolving to Microservices</h2><div class="preamble"><div class="paragraph"><p><h2>
 SmartThings Case Study
-</h2></p></div>
-<aside class="notes"><div class="paragraph"><p>We have been on a 4 year journey evolving our architecture at SmartThings. Moving from 1 monolith and 3 supporting services to more than 100 microservices. Expanding from a US only platform to a world wide IoT platform. Our architecture has been shaped by product and organizational needs. We will go through the major architectural eras as we iterated on our platform.</p></div>
-<div class="paragraph"><p>Detail Bullets:
-Some areas we will touch on; for each of 3 eras in our evolution:
-Why did we pick this design?
-What worked?
-What was painful?
-When was it time to change?</p></div>
-<div class="paragraph"><p>Eras:
-Monolith  (1)</p></div>
-<div class="paragraph"><p>Monolith+ (3)
-Why? Solve the pain from just a monolith but
-Worked? Technology suited to the connection was selected for each,
-Painful? Getting hard to test limited features, dragging in changes too early to different
-Change? Started to hit scaling issues, how to support global rollout quickly, too many conflicting changes when trying to experiment
-Global Layer MicroServices (7)
-Why? Needed to support multiple geos all at once
-Worked? Quick escape valve for scale issues, simple geo deployments
-Painful?  Still couldn’t scale different operations in different ways, too many conflicting changes when trying to experiment
-Change? Couldn’t scale different workloads differently in different geos
-Layers of Microservices / Breaking up the Monolith  (The era of fit into one of these categories 60-80)
-Why? Teams, were just starting to take on call for their own services. Not clear everyone had strong operational skills
-Worked? Easy to reason about different services as we peel out functionality
-Painful? As we get more custom use cases per service fitting things into the buckets was hard and it was too hard to make new buckets, reasoning about the system is getting harder
-Change? We outgrew the need
-Use case driven microservices deployments  (The era of do the best thing 130+)
-Why? Flexibility to do the right thing
-Worked? React to evolving regulations architecturally smoothly, cost optimizations,  teams can easily
-Painful? Building tools to support every use case, observability, reasoning about the system as a whole becomes hard
-Change? Current</p></div>
-<div class="paragraph"><p>Other areas I will dig into:
-What patterns emerged that we still use?
-Thin persistent connections
-Routing keys / gizmo style
-Doing
-What patterns failed us and why?
-Defined categories - too ridged, limited engineers thinking of solutions
-Building generic first&#8201;&#8212;&#8201;too costly, sometimes miss at primitives
-Will that monolith ever really die?
-Or does the rest of the system grow to eclipse it?
-Slower if you are reworking core features instead of just breaking it up. Rebuild / replacement with competing features is hard
-Did we just make a really hard to deploy monolith?
-Almost at times.
-Our checklist for a new service.</p></div></aside></div></section>
+</h2></p></div></div></section>
 <section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li><p>Intro</p></li><li><p>What is SmartThings</p></li><li><p>Eras of Our Architecture</p></li><li><p>What Failed for Us</p></li><li><p>Patterns Working Across Eras</p></li><li><p>Will that Monolith Ever Really Die</p></li></ul></div></section>
 <section id="networking"><h2>Networking</h2><div class="paragraph"><p>To the people around you:</p></div>
-<div class="ulist"><ul><li><p>What company or organization are you from?</p></li><li><p>What they&#8217;re looking to take away from this case study?</p></li></ul></div></section>
+<div class="ulist"><ul><li><p>What company or organization are you from?</p></li><li><p>What are you all looking to take away from this case study?</p></li></ul></div></section>
 <section id="whoami"><h2>$whoami</h2><div class="paragraph"><p>Jeff Beck</p></div>
 <div class="paragraph"><p>Software at SmartThings</p></div>
 <div class="paragraph"><p>@Beckje01</p></div></section>
@@ -94,39 +51,12 @@ Change? We outgrew the need</p></div></aside></section></section>
 Worked? React to evolving regulations architecturally smoothly, cost optimizations,  teams can easily
 Painful? Building tools to support every use case, observability, reasoning about the system as a whole becomes hard
 Change? Current</p></div></aside></section></section>
-<section><section id="what-failed-for-us"><h2>What Failed for Us</h2><div class="paragraph"><p>You should try something else then these ideas.</p></div></section><section id="defined-categories"><h2>Defined Categories</h2><div class="ulist"><ul><li><p>Too ridged</p></li><li><p>Limited engineers thinking of solutions</p></li></ul></div></section><section id="building-generic-first"><h2>Building Generic First</h2><div class="ulist"><ul><li><p>Too costly</p></li><li><p>Sometimes miss at primitives</p></li></ul></div></section></section>
+<section><section id="what-failed-for-us"><h2>What Failed for Us</h2><div class="paragraph"><p>You should try something else then these ideas.</p></div></section><section id="defined-categories"><h2>Defined Categories</h2><div class="ulist"><ul><li><p>Too rigid</p></li><li><p>Limited engineers thinking of solutions</p></li></ul></div></section><section id="building-generic-first"><h2>Building Generic First</h2><div class="ulist"><ul><li><p>Too costly</p></li><li><p>Sometimes miss at primitives</p></li></ul></div></section><section id="automated-architecture-diagrams"><h2>Automated Architecture Diagrams</h2><div class="paragraph"><p>As system got advanced enough there was no longer use from the automated architecture view.</p></div></section></section>
 <section id="patterns-working-across-eras"><h2>Patterns Working Across Eras</h2><div class="paragraph"><p>No matter what era of architecture, these work for us.</p></div></section>
+<section><section id="human-made-diagrams"><h2>Human Made Diagrams</h2><div class="paragraph"><p>A drillable diagram. High level moving to details of functional areas.</p></div></section><section id="example"><h2>Example</h2><div class="imageblock" style=""><img src="./images/overview.png" alt="alt" width="auto" height="400" /></div></section><section id="example-2"><h2>Example</h2><div class="imageblock" style=""><img src="./images/api.png" alt="alt" width="auto" height="400" /></div></section></section>
 <section id="thin-persistent-connectors"><h2>Thin Persistent Connectors</h2><div class="paragraph"><p>A service that maintains a connect ideally has 0 logic outside of the connection.</p></div>
 <div class="ulist"><ul><li><p>Allows deployments to not disconnect hubs/devices</p></li><li><p>Small easy to maintain, hopefully mostly off the shelf.</p></li></ul></div></section>
-<section><section id="routing-keys"><h2>Routing Keys</h2><div class="ulist"><ul><li><p>Allows Moving URLs without rewritting all destinations.</p></li><li><p>Allows telling a cordiantor where to route</p></li></ul></div></section><section id="example"><h2>Example</h2><div class="literalblock"><div class="content"><pre>[plantuml%interactive, imagesPUML/deviceapi, svg,width=400,height=400]</pre></div></div>
-<pre class="highlight listingblock"><code data-noescape="">@startuml
-title SmartThings Device Control Plane
-rectangle Global {
-    rectangle Conductor as "Conductor"
-    rectangle emissary as "OCF Backend"
-}
-
-rectangle Regional {
-    rectangle ApiGateway
-    rectangle mqtt as "MQTT Backend"
-}
-
-rectangle Shard {
-    rectangle viper as "Backend"
-    rectangle widget as "Hub Backend"
-    rectangle dth as "Legacy Backend"
-}
-
-
-
-ApiGateway -&gt; Conductor : api requests
-
-Conductor --(0)-- mqtt
-Conductor -(0)- emissary
-Conductor --(0)-- viper
-Conductor --(0)-- dth
-Conductor --(0)-- widget
-@enduml</code></pre></section></section>
+<section><section id="routing-keys"><h2>Routing Keys</h2><div class="ulist"><ul><li><p>Allows Moving URLs without rewritting all destinations.</p></li><li><p>Allows telling a coordinator where to route</p></li></ul></div></section><section id="example-3"><h2>Example</h2><div class="imageblock" style=""><img src="./images/imagesPUML/deviceapi.svg" alt="deviceapi" width="auto" height="400" /></div></section></section>
 <section><section id="tooling"><h2>Tooling</h2><div class="paragraph"><p>Build tooling only looking ahead 1 era and plan on deprecation.</p></div></section><section id="deployment-tooling"><h2>Deployment Tooling</h2><div class="paragraph"><p>Spinnaker with 5 microservices is too heavy.</p></div>
 <div class="paragraph"><p>Spinnaker with 100+ works great.</p></div></section></section>
 <section id="paved-path"><h2>Paved Path</h2><div class="paragraph"><p>Creating a documented tooled path that covers your 80% case.</p></div></section>
@@ -266,7 +196,7 @@ Reveal.initialize({
   
 
 });</script><div class="footer" style="">
-	<img align="left" src="./images/smartthings-logo-light.png" /><p> <i class="fa fa-twitter-square"></i><a href="http://twitter.com/beckje01">@beckje01</a>  <a href="https://twitter.com/hashtag/OReillySACon">#OReillyASCon</a>  <i class="fa fa-link"></i><a href="http://bit.ly/">bit.ly/</a> </p>
+	<img align="left" src="./images/smartthings-logo-light.png" /><p> <i class="fa fa-twitter-square"></i><a href="http://twitter.com/beckje01">@beckje01</a>  <a href="https://twitter.com/hashtag/OReillySACon">#OReillyASCon</a>  <i class="fa fa-link"></i><a href="http://bit.ly/osaST2019">bit.ly/osaST2019</a> </p>
 </div>
 
 
