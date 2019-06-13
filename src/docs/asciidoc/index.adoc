@@ -190,7 +190,29 @@ Spinnaker with 100+ works great.
 
 Creating a documented tooled path that covers your 80% case.
 
+== Break Out Auth First
 
-== Will that Monolith Ever Really Die
+Auth systems are so important to everything done you should always break them out first. 
+
+Allows adding new services without interacting with the old monolith.
+
+== Will that Monolith Ever Really Die?
+
+You have tons of new services but that old big one is still there...
+
+=== Does it have to die?
+
+ * Does the rest of the system grow to eclipse it?
+ * Can we still operate it?
+ * Can we isolate it off behind some cleaner services?
+
+=== Monolith as Legacy Support
+
+If you can still operate this system and everything isn't depending on it you can effectively keep the monolith in a corner 
+
+== How do we know it's not a distributed Monolith
+
+ * When you start seeing outages not cascade.
+ * When deployments of the service graph don't matter to every team.
 
 include::shared/end.adoc[]
