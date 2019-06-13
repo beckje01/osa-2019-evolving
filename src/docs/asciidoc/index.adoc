@@ -18,61 +18,6 @@ ifndef::sourcedir[:sourcedir: ../java]
 SmartThings Case Study
 +++</h2>+++
 
-[.notes]
---
-We have been on a 4 year journey evolving our architecture at SmartThings. Moving from 1 monolith and 3 supporting services to more than 100 microservices. Expanding from a US only platform to a world wide IoT platform. Our architecture has been shaped by product and organizational needs. We will go through the major architectural eras as we iterated on our platform.
-
-Detail Bullets:
-Some areas we will touch on; for each of 3 eras in our evolution:
-Why did we pick this design?
-What worked?
-What was painful?
-When was it time to change?
-
-
-Eras:
-Monolith  (1)
-
-
-Monolith+ (3)
-Why? Solve the pain from just a monolith but 
-Worked? Technology suited to the connection was selected for each, 
-Painful? Getting hard to test limited features, dragging in changes too early to different 
-Change? Started to hit scaling issues, how to support global rollout quickly, too many conflicting changes when trying to experiment
-Global Layer MicroServices (7)
-Why? Needed to support multiple geos all at once
-Worked? Quick escape valve for scale issues, simple geo deployments
-Painful?  Still couldn’t scale different operations in different ways, too many conflicting changes when trying to experiment
-Change? Couldn’t scale different workloads differently in different geos 
-Layers of Microservices / Breaking up the Monolith  (The era of fit into one of these categories 60-80)
-Why? Teams, were just starting to take on call for their own services. Not clear everyone had strong operational skills
-Worked? Easy to reason about different services as we peel out functionality 
-Painful? As we get more custom use cases per service fitting things into the buckets was hard and it was too hard to make new buckets, reasoning about the system is getting harder
-Change? We outgrew the need 
-Use case driven microservices deployments  (The era of do the best thing 130+)
-Why? Flexibility to do the right thing
-Worked? React to evolving regulations architecturally smoothly, cost optimizations,  teams can easily 
-Painful? Building tools to support every use case, observability, reasoning about the system as a whole becomes hard
-Change? Current
-
-
-Other areas I will dig into:
-What patterns emerged that we still use?
-Thin persistent connections
-Routing keys / gizmo style
-Doing 
-What patterns failed us and why?
-Defined categories - too ridged, limited engineers thinking of solutions
-Building generic first -- too costly, sometimes miss at primitives
-Will that monolith ever really die? 
-Or does the rest of the system grow to eclipse it?
-Slower if you are reworking core features instead of just breaking it up. Rebuild / replacement with competing features is hard
-Did we just make a really hard to deploy monolith? 
-Almost at times. 
-Our checklist for a new service.
-
---
-
 
 
 == Agenda
@@ -89,7 +34,7 @@ Our checklist for a new service.
 To the people around you:
 
  * What company or organization are you from?
- * What they're looking to take away from this case study?
+ * What are you all looking to take away from this case study?
 
 include::shared/whoami.adoc[]
 
