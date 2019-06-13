@@ -1,0 +1,196 @@
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+:navigation:
+:menu:
+:status:
+:title-slide-background-image: osa-title.jpg
+// :title-slide-background-size: auto 75%
+// :title-slide-background-position: center top
+:title-slide-transition: zoom
+:title-slide-transition-speed: fast
+:icons: font
+
+= : Evolving to Microservices
+
++++<h2>+++
+SmartThings Case Study
++++</h2>+++
+
+[.notes]
+--
+We have been on a 4 year journey evolving our architecture at SmartThings. Moving from 1 monolith and 3 supporting services to more than 100 microservices. Expanding from a US only platform to a world wide IoT platform. Our architecture has been shaped by product and organizational needs. We will go through the major architectural eras as we iterated on our platform.
+
+Detail Bullets:
+Some areas we will touch on; for each of 3 eras in our evolution:
+Why did we pick this design?
+What worked?
+What was painful?
+When was it time to change?
+
+
+Eras:
+Monolith  (1)
+
+
+Monolith+ (3)
+Why? Solve the pain from just a monolith but 
+Worked? Technology suited to the connection was selected for each, 
+Painful? Getting hard to test limited features, dragging in changes too early to different 
+Change? Started to hit scaling issues, how to support global rollout quickly, too many conflicting changes when trying to experiment
+Global Layer MicroServices (7)
+Why? Needed to support multiple geos all at once
+Worked? Quick escape valve for scale issues, simple geo deployments
+Painful?  Still couldn’t scale different operations in different ways, too many conflicting changes when trying to experiment
+Change? Couldn’t scale different workloads differently in different geos 
+Layers of Microservices / Breaking up the Monolith  (The era of fit into one of these categories 60-80)
+Why? Teams, were just starting to take on call for their own services. Not clear everyone had strong operational skills
+Worked? Easy to reason about different services as we peel out functionality 
+Painful? As we get more custom use cases per service fitting things into the buckets was hard and it was too hard to make new buckets, reasoning about the system is getting harder
+Change? We outgrew the need 
+Use case driven microservices deployments  (The era of do the best thing 130+)
+Why? Flexibility to do the right thing
+Worked? React to evolving regulations architecturally smoothly, cost optimizations,  teams can easily 
+Painful? Building tools to support every use case, observability, reasoning about the system as a whole becomes hard
+Change? Current
+
+
+Other areas I will dig into:
+What patterns emerged that we still use?
+Thin persistent connections
+Routing keys / gizmo style
+Doing 
+What patterns failed us and why?
+Defined categories - too ridged, limited engineers thinking of solutions
+Building generic first -- too costly, sometimes miss at primitives
+Will that monolith ever really die? 
+Or does the rest of the system grow to eclipse it?
+Slower if you are reworking core features instead of just breaking it up. Rebuild / replacement with competing features is hard
+Did we just make a really hard to deploy monolith? 
+Almost at times. 
+Our checklist for a new service.
+
+--
+
+
+
+== Agenda
+
+* Intro
+* What is SmartThings
+* Eras of Our Architecture 
+* What Failed for Us
+* Patterns Working Across Eras
+* Will that Monolith Ever Really Die
+
+== Networking
+
+To the people around you:
+
+ * What company or organization are you from?
+ * What they're looking to take away from this case study?
+
+include::shared/whoami.adoc[]
+
+include::shared/about-st.adoc[]
+
+== Why Call It Era
+
+The architecture changed over time the lines between each era are blurry. 
+
+include::osa/mono.adoc[]
+
+include::osa/monoplus.adoc[]
+
+include::osa/globallayer.adoc[]
+
+include::osa/layers.adoc[]
+
+include::osa/bestthing.adoc[]
+
+
+== What Failed for Us
+
+You should try something else then these ideas.
+
+=== Defined Categories
+
+ * Too ridged
+ * Limited engineers thinking of solutions
+
+
+=== Building Generic First 
+
+ * Too costly
+ * Sometimes miss at primitives
+ 
+== Patterns Working Across Eras
+
+No matter what era of architecture, these work for us.
+
+== Thin Persistent Connectors
+
+A service that maintains a connect ideally has 0 logic outside of the connection.
+
+ * Allows deployments to not disconnect hubs/devices
+ * Small easy to maintain, hopefully mostly off the shelf.
+ 
+== Routing Keys
+
+ * Allows Moving URLs without rewritting all destinations.
+ * Allows telling a cordiantor where to route
+
+
+=== Example 
+
+ [plantuml%interactive, imagesPUML/deviceapi, svg,width=400,height=400]
+----
+@startuml
+title SmartThings Device Control Plane
+rectangle Global {
+    rectangle Conductor as "Conductor"
+    rectangle emissary as "OCF Backend"
+}
+
+rectangle Regional {
+    rectangle ApiGateway
+    rectangle mqtt as "MQTT Backend"
+}
+
+rectangle Shard {
+    rectangle viper as "Backend"
+    rectangle widget as "Hub Backend"
+    rectangle dth as "Legacy Backend"
+}
+
+
+
+ApiGateway -> Conductor : api requests
+
+Conductor --(0)-- mqtt  
+Conductor -(0)- emissary
+Conductor --(0)-- viper
+Conductor --(0)-- dth
+Conductor --(0)-- widget
+@enduml
+----
+
+== Tooling 
+
+Build tooling only looking ahead 1 era and plan on deprecation.
+
+=== Deployment Tooling
+
+Spinnaker with 5 microservices is too heavy.
+
+Spinnaker with 100+ works great.
+
+== Paved Path
+
+Creating a documented tooled path that covers your 80% case.
+
+
+== Will that Monolith Ever Really Die
+
+include::shared/end.adoc[]

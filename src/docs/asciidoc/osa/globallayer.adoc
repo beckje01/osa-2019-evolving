@@ -1,0 +1,39 @@
+== Global Layer μ-Services
+
+A small set of services available globally, with our core deployed in different geos.
+
+=== What it looked like
+
+image::detailed-global.png[Global Layer,width=auto,height=500]
+
+=== Why did we pick this design?
+
+ * Support multiple geographies at once.
+ * Minimal change to support business needs.
+ * Global services were new to us so limiting how many we needed
+
+=== What worked?
+
+ * Quick escape valve for scale issues, just add another shard.
+ * Minimal changes to mobile clients and hubs.
+ * Pulled out Auth / User to a Microservice
+
+
+=== What was painful?
+
+ * Couldn't scale different operations in different ways
+ * Too many conflicting changes when trying to experiment.
+
+=== When was it time to change?
+
+ * Couldn't scale different workloads in different geographies
+ * Team has grown too big to share a codebase
+ * Team is now distributed around the globe 
+
+[.notes]
+--
+Why? Needed to support multiple geos all at once
+Worked? Quick escape valve for scale issues, simple geo deployments
+Painful?  Still couldn’t scale different operations in different ways, too many conflicting changes when trying to experiment
+Change? Couldn’t scale different workloads differently in different geos 
+--

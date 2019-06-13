@@ -1,0 +1,38 @@
+== Use Case Driven Microservice Deployments
+
+Refocus on letting teams to deploy and design how they want.
+
+=== What it looks Like
+
+image::zipkinlens-blocks.png[zipkinblocks,width=auto,height=500]
+
+
+=== Why did we pick this design?
+
+ * Flexibility to teams
+ * Unblock teams thinking
+
+
+=== What worked?
+
+ * React to evolving regulations by changing service / feature deployment architecture
+ * Cost optimizations
+
+=== What was painful?
+
+ * Building common tools to support most of the use cases
+ * Observability
+ * What should be a paved path?
+
+=== When was it time to change?
+
+We will let you know.
+
+[.notes]
+--
+Why? Flexibility to do the right thing
+Worked? React to evolving regulations architecturally smoothly, cost optimizations,  teams can easily 
+Painful? Building tools to support every use case, observability, reasoning about the system as a whole becomes hard
+Change? Current
+--
+

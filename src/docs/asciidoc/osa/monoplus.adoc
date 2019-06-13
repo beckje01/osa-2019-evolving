@@ -1,0 +1,56 @@
+== Monolith Plus
+
+Some extra services stood up to deal with special connections but can not operate without the monolith.
+
+=== What it looked like
+
+[plantuml%interactive, imagesPUML/monoplus, svg, width=300, height=300]
+----
+@startuml 
+  cloud stc as "SmartThings\nCloud" {
+    rectangle dm as "Core"
+    rectangle devcon as "Device\nCon"
+    rectangle clientcon as "Client\nCon"
+  }
+
+  rectangle client as "Mobile\nClient" #lightgrey
+  rectangle hub as "Hub" #lightgrey
+
+  hub <-right-> devcon
+  client -> dm
+  clientcon -left-> client
+
+  dm -> devcon
+  dm -down-> clientcon
+
+@enduml
+----
+
+=== Why did we pick this design?
+
+Needed special connections to the phone and hub, but didn't want to split up the core business logic.
+
+=== What worked?
+
+ * Correct Technology for each use case
+ * Simple Deployment
+ * Debugging business logic was always in the core, connectivity in the other services.
+
+=== What was painful?
+
+ * Harder to test limited features in an environment
+ * Team size getting bigger, starting to feel crowded in the codebase
+ * Coupled features
+
+=== When was it time to change?
+
+ * Starting to hit scaling issues for the core service.
+ * How to support a global rollout of our platform.
+
+[.notes]
+--
+Why? Solve the pain from just a monolith but 
+Worked? Technology suited to the connection was selected for each, 
+Painful? Getting hard to test limited features, dragging in changes too early to different 
+Change? Started to hit scaling issues, how to support global rollout quickly, too many conflicting changes when trying to experiment
+--
