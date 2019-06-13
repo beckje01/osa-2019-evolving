@@ -106,7 +106,7 @@ A service that maintains a connect ideally has 0 logic outside of the connection
 
 === Example 
 
- [plantuml%interactive, imagesPUML/deviceapi, svg,width=400,height=400]
+[plantuml%interactive, imagesPUML/deviceapi, svg,width=400,height=400]
 ----
 @startuml
 title SmartThings Device Control Plane
