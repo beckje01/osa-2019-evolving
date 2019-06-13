@@ -61,7 +61,7 @@ You should try something else then these ideas.
 
 === Defined Categories
 
- * Too ridged
+ * Too rigid
  * Limited engineers thinking of solutions
 
 
@@ -69,10 +69,27 @@ You should try something else then these ideas.
 
  * Too costly
  * Sometimes miss at primitives
+
+=== Automated Architecture Diagrams
+
+As system got advanced enough there was no longer use from the automated architecture view.
+
  
 == Patterns Working Across Eras
 
 No matter what era of architecture, these work for us.
+
+== Human Made Diagrams
+
+A drillable diagram. High level moving to details of functional areas.
+
+=== Example 
+
+image::overview.png[alt, width=auto, height=400]
+
+=== Example
+
+image::api.png[alt, width=auto, height=400]
 
 == Thin Persistent Connectors
 
@@ -84,7 +101,7 @@ A service that maintains a connect ideally has 0 logic outside of the connection
 == Routing Keys
 
  * Allows Moving URLs without rewritting all destinations.
- * Allows telling a cordiantor where to route
+ * Allows telling a coordinator where to route
 
 
 === Example 
